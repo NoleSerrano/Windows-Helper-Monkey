@@ -34,7 +34,7 @@ class SoundManager
         else
         {
             // Handle the case where the sound name is not found
-            System.Diagnostics.Debug.WriteLine($"Sound not found: {soundName}");
+            Console.WriteLine($"Sound not found: {soundName}");
         }
     }
 }
