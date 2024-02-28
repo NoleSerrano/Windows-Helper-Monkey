@@ -67,37 +67,39 @@ class WindowsHelperMonkey
         Console.WriteLine("Banana request - Monkey wants a banana!");
     }
 
-    // public void Run()
-    // {
-    //     Console.WriteLine("Enter commands:");
-    //     while (true)
-    //     {
-    //         string? inputLine = Console.ReadLine();
-    //         if (string.IsNullOrEmpty(inputLine)) continue;
+    public void Run()
+    {
+        Console.WriteLine("Enter commands:");
+        while (true)
+        {
+            string? inputLine = Console.ReadLine();
+            if (string.IsNullOrEmpty(inputLine)) continue;
 
-    //         string[] parts = inputLine.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-    //         if (parts.Length == 0) continue;
+            string[] parts = inputLine.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length == 0) continue;
 
-    //         string command = parts[0].ToLower();
-    //         string[] args = parts.Skip(1).ToArray();
+            string command = parts[0].ToLower();
+            string[] args = parts.Skip(1).ToArray();
 
-    //         switch (command)
-    //         {
-    //             case "playsound":
-    //                 if (args.Length > 0) PlaySound(args[0]);
-    //                 else Console.WriteLine("Missing argument for playsound.");
-    //                 break;
-    //             case "setvolume":
-    //                 if (args.Length > 0 && int.TryParse(args[0], out int volume)) SetSystemVolume(volume);
-    //                 else Console.WriteLine("Invalid or missing argument for setvolume.");
-    //                 break;
-    //             // Add more cases for other commands
-    //             default:
-    //                 Console.WriteLine("Unknown command.");
-    //                 break;
-    //         }
-    //     }
-    // }
+            switch (command)
+            {
+                case "playsound":
+                    if (args.Length > 0) PlaySound(args[0]);
+                    else Console.WriteLine("Missing argument for playsound.");
+                    break;
+                case "setvolume":
+                    if (args.Length > 0 && int.TryParse(args[0], out int volume)) SetSystemVolume(volume);
+                    else Console.WriteLine("Invalid or missing argument for setvolume.");
+                    break;
+                case "exit":
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Unknown command.");
+                    break;
+            }
+        }
+    }
 
     public void RunWithAutoComplete()
     {
@@ -145,6 +147,17 @@ class WindowsHelperMonkey
         do
         {
             key = Console.ReadKey(true);
+
+            if (key.Modifiers.HasFlag(ConsoleModifiers.Control))
+            {
+                if (key.Key == ConsoleKey.W)
+                {
+                    Console.Write(key.Key + " " + ConsoleKey.Backspace);
+                }
+                Console.Write(key.Key + " " + ConsoleKey.Backspace);
+                Console.WriteLine();
+            }
+
             if (key.Key == ConsoleKey.Tab)
             {
                 string prefix = input.ToString();
@@ -175,6 +188,6 @@ class WindowsHelperMonkey
     {
         // SetSystemVolume(50);
         WindowsHelperMonkey monkeyBackend = new WindowsHelperMonkey();
-        monkeyBackend.RunWithAutoComplete();
+        monkeyBackend.Run();
     }
 }
