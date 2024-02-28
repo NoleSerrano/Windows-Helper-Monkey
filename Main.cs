@@ -42,6 +42,12 @@ class WindowsHelperMonkey
         soundManager.PlaySound(soundName);
     }
 
+    public void SendMessage(string message)
+    {
+        // MessageBubble.ShowMessageBubble("Your message here.");
+        Console.WriteLine(message);
+    }
+
     public static void OpenApps()
     {
         Console.WriteLine("Opening and closing apps - Monkey is busy!");
@@ -90,6 +96,10 @@ class WindowsHelperMonkey
                 case "setvolume":
                     if (args.Length > 0 && int.TryParse(args[0], out int volume)) SetSystemVolume(volume);
                     else Console.WriteLine("Invalid or missing argument for setvolume.");
+                    break;
+                case "sendmessage":
+                    if (args.Length > 0) SendMessage(string.Join(" ", args));
+                    else Console.WriteLine("Missing message to send.");
                     break;
                 case "exit":
                     Environment.Exit(0);
