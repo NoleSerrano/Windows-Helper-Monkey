@@ -44,7 +44,8 @@ class WindowsHelperMonkey
 
     public void SendMessage(string message)
     {
-        // MessageBubble.ShowMessageBubble("Your message here.");
+        MessageBubble.ShowMessageBubble(message);
+        
         Console.WriteLine(message);
     }
 
